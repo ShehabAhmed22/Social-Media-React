@@ -1,4 +1,4 @@
-cat > README.md << 'EOF'
+
 # 📱 Social Media Platform
 
 [![Backend](https://img.shields.io/badge/Backend-Node.js-green)](https://nodejs.org/)  
@@ -9,14 +9,6 @@ cat > README.md << 'EOF'
 A **full-featured social media platform** built with **Express.js + Prisma** (backend) and **React.js + Vite** (frontend) 🌐🚀  
 
 _Built with ❤️ by [Shehab Elbana ]_
-
----
-
-## 🔗 Demo
-
-![Project Preview](https://user-images.githubusercontent.com/your-username/demo-preview.gif)  
-*Screenshot/GIF showing your app in action*
-
 ---
 
 ## ✨ Features Overview
@@ -70,7 +62,7 @@ Triggered by:
 
 ### Backend
 - Node.js + Express.js  
-- Prisma ORM + PostgreSQL  
+- Prisma ORM + MySQL 
 - JWT Authentication  
 - Bcrypt → password hashing  
 - Helmet + CORS + rate limiting → security  
@@ -85,57 +77,6 @@ Triggered by:
 - Moment.js → formatting timestamps  
 - SCSS → responsive & themable  
 
----
-
-## 🚀 Getting Started
-
-### Backend
-\`\`\`bash
-git clone https://github.com/your-username/socialmedia-backend.git
-cd socialmedia-backend
-npm install
-
-# Setup .env
-# DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
-# JWT_SECRET="your_jwt_secret"
-
-npm run dev
-\`\`\`
-
-### Frontend
-\`\`\`bash
-git clone https://github.com/your-username/socialmedia-frontend.git
-cd socialmedia-frontend
-npm install
-npm run dev
-\`\`\`
-
----
-
-## 🏗️ Project Structure
-
-### Backend
-\`\`\`
-/controller    # Auth, posts, comments, replies, stories, users
-/middlewares   # Auth, validation, rate limiting
-/routes        # Express routes
-/validation    # Joi/Zod validators
-/prisma        # Prisma schema
-server.js      # Entry point
-\`\`\`
-
-### Frontend
-\`\`\`
-/src/components    # React components (Posts, Comments, Stories, Navbar)
-/src/pages         # Pages (Home, Profile, Feed)
-/src/api           # Axios API calls
-/src/hooks         # React Query hooks
-/src/styles        # SCSS styles
-/src/main.jsx      # Entry point
-\`\`\`
-
----
-
 ## 💡 Notes
 - Stories auto-delete after 24h via a **cron job**.  
 - JWT token required in `Authorization` header for protected routes.  
@@ -149,4 +90,4 @@ server.js      # Entry point
 [![Express](https://img.shields.io/badge/Express-5.0.0-lightgrey)](https://expressjs.com/)  
 [![Prisma](https://img.shields.io/badge/Prisma-6.19.0-blue)](https://www.prisma.io/)  
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blueviolet)](https://www.postgresql.org/)  
-EOF
+ 
