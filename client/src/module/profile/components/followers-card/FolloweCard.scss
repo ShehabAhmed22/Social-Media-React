@@ -1,0 +1,120 @@
+// ─── Followers Card ───────────────────────────────────────────────────────────
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.followers-card {
+  background: var(--bg-secondary, #fff);
+  border: 1px solid var(--border-color, #dbdbdb);
+  border-radius: 12px;
+  padding: 16px;
+
+  .dark & {
+    background: var(--bg-card, #242424);
+    border-color: var(--border-color, #333);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary, #111);
+    margin: 0;
+  }
+
+  &__see-all {
+    background: none;
+    border: none;
+    color: #0095f6;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--skeleton-base, #efefef);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__username {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary, #111);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__display {
+    font-size: 11px;
+    color: var(--text-secondary, #666);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__empty {
+    font-size: 13px;
+    color: var(--text-secondary, #666);
+    text-align: center;
+    padding: 12px 0;
+    margin: 0;
+  }
+
+  &__skeletons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__skeleton {
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(
+      90deg,
+      var(--skeleton-base, #efefef) 25%,
+      var(--skeleton-shine, #f8f8f8) 50%,
+      var(--skeleton-base, #efefef) 75%
+    );
+    background-size: 800px 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+}

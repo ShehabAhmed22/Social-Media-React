@@ -1,0 +1,833 @@
+// ─── CSS Variables ────────────────────────────────────────────────────────────
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f0f0;
+  --bg-elevated: #ffffff;
+  --text-primary: #0a0a0a;
+  --text-secondary: #6b6b6b;
+  --text-muted: #9b9b9b;
+  --border-color: #e0e0e0;
+  --accent: #0095f6;
+  --accent-hover: #0081d6;
+  --danger: #ff3b5c;
+  --story-gradient: linear-gradient(
+    135deg,
+    #f09433,
+    #e6683c,
+    #dc2743,
+    #cc2366,
+    #bc1888
+  );
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.14);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1c1c1c;
+  --bg-elevated: #1c1c1c;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a0a0a0;
+  --text-muted: #606060;
+  --border-color: #2a2a2a;
+  --accent: #0095f6;
+  --accent-hover: #1aa3ff;
+  --danger: #ff3b5c;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.7);
+}
+
+// ─── Stories Strip ────────────────────────────────────────────────────────────
+.stories-strip {
+  width: 100%;
+  position: relative;
+  padding: 10px 0 4px;
+
+  &__track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+    padding: 4px 16px 10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 28px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-primary), transparent);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-primary), transparent);
+  }
+}
+
+// ─── Story Bubble ─────────────────────────────────────────────────────────────
+.story-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  cursor: pointer;
+  animation: bubblePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  @for $i from 1 through 25 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 0.04}s;
+    }
+  }
+
+  &__ring-wrap {
+    position: relative;
+    width: 66px;
+    height: 66px;
+  }
+
+  &__ring {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    padding: 2.5px;
+    background: var(--story-gradient);
+    transition:
+      transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.2s;
+
+    &--seen {
+      background: var(--border-color);
+    }
+
+    &--add {
+      background: var(--accent);
+    }
+  }
+
+  &:active &__ring {
+    transform: scale(0.93);
+  }
+
+  &:hover &__ring {
+    transform: scale(1.06);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  }
+
+  &__inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2.5px solid var(--bg-primary);
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__initial {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: Georgia, serif;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  &__plus {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__name {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    max-width: 70px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: Georgia, serif;
+
+    &--you {
+      color: var(--accent);
+      font-weight: 700;
+    }
+  }
+
+  &--sentinel {
+    width: 1px;
+    opacity: 0;
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+}
+
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
+.story-skel {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  &__ring {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  &__name {
+    width: 44px;
+    height: 9px;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    animation: shimmer 1.4s ease-in-out infinite 0.2s;
+  }
+}
+
+// ─── Story Viewer ─────────────────────────────────────────────────────────────
+.sv-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.94);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.18s ease;
+}
+
+.sv {
+  position: relative;
+  width: min(390px, 100vw);
+  height: min(700px, 100dvh);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+
+  // ── Progress ──
+  &__progress {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 3px;
+    z-index: 20;
+  }
+
+  &__bar {
+    flex: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.28);
+    border-radius: 2px;
+    overflow: hidden;
+
+    span {
+      display: block;
+      height: 100%;
+      background: #fff;
+      border-radius: 2px;
+      width: 0;
+
+      &.done {
+        width: 100%;
+        transition: none;
+      }
+      &.active {
+        animation: progressRun var(--dur, 5s) linear forwards;
+      }
+    }
+  }
+
+  // ── Header ──
+  &__header {
+    position: absolute;
+    top: 22px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    z-index: 20;
+    padding-top: 6px;
+  }
+
+  &__av {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    flex-shrink: 0;
+  }
+
+  &__av-init {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    font-family: Georgia, serif;
+    flex-shrink: 0;
+  }
+
+  &__meta {
+    flex: 1;
+    min-width: 0;
+
+    strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      font-family: Georgia, serif;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    span {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    border-radius: 50%;
+    transition:
+      color 0.15s,
+      background 0.15s;
+
+    &:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  // ── Media ──
+  &__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  &__media-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    background: linear-gradient(160deg, #1a1a2e, #16213e, #0f3460);
+    z-index: 1;
+  }
+
+  // Bottom gradient
+  &__gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.82) 0%,
+      transparent 100%
+    );
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  // ── Caption ──
+  &__caption {
+    position: absolute;
+    bottom: 130px;
+    left: 14px;
+    right: 14px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.55;
+    font-family: Georgia, serif;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+    z-index: 10;
+  }
+
+  // ── Nav tap zones ──
+  &__nav {
+    position: absolute;
+    top: 0;
+    bottom: 160px;
+    width: 38%;
+    z-index: 15;
+    cursor: pointer;
+
+    &--prev {
+      left: 0;
+    }
+    &--next {
+      right: 0;
+    }
+  }
+
+  // ── Bottom actions: like + comment ──
+  &__bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 12px 18px;
+  }
+
+  &__comment-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__comment-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.13);
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    border-radius: 22px;
+    padding: 9px 16px;
+    font-size: 13px;
+    color: #fff;
+    outline: none;
+    font-family: Georgia, serif;
+    transition:
+      border-color 0.2s,
+      background 0.2s;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:focus {
+      border-color: rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.18);
+    }
+  }
+
+  &__send-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition:
+      opacity 0.15s,
+      transform 0.15s;
+
+    &:hover:not(:disabled) {
+      opacity: 0.85;
+      transform: scale(1.07);
+    }
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  &__like-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-family: Georgia, serif;
+    border-radius: 8px;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    svg {
+      transition:
+        fill 0.2s,
+        stroke 0.2s,
+        transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &--liked {
+      color: var(--danger);
+      svg {
+        fill: var(--danger);
+        stroke: var(--danger);
+        transform: scale(1.25);
+      }
+    }
+  }
+
+  &__like-count {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: Georgia, serif;
+  }
+}
+
+// ─── Create Story Modal ───────────────────────────────────────────────────────
+.cs-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.18s ease;
+}
+
+.cs-modal {
+  background: var(--bg-elevated);
+  border-radius: 20px;
+  width: min(460px, 100%);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 18px 0;
+
+    h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-family: Georgia, serif;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+      display: flex;
+      transition: background 0.15s;
+
+      &:hover {
+        background: var(--bg-secondary);
+      }
+    }
+  }
+
+  &__body {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  // Image drop zone
+  &__drop {
+    width: 100%;
+    aspect-ratio: 9 / 14;
+    max-height: 300px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px dashed var(--border-color);
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: var(--accent);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__drop-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    pointer-events: none;
+
+    svg {
+      opacity: 0.45;
+    }
+    span {
+      font-size: 13px;
+      font-family: Georgia, serif;
+    }
+  }
+
+  &__remove-img {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+
+    &:hover {
+      background: rgba(220, 30, 30, 0.75);
+    }
+  }
+
+  &__uploading {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+    font-family: Georgia, serif;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 13px;
+    color: var(--text-primary);
+    font-family: Georgia, serif;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &::placeholder {
+      color: var(--text-muted);
+    }
+    &:focus {
+      border-color: var(--accent);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    gap: 10px;
+    padding: 0 18px 18px;
+
+    label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 11px;
+      border-radius: 12px;
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      transition:
+        border-color 0.2s,
+        color 0.2s;
+
+      &:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+    }
+
+    button {
+      flex: 1;
+      padding: 11px;
+      border-radius: 12px;
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      transition:
+        opacity 0.2s,
+        transform 0.15s;
+
+      &:hover:not(:disabled) {
+        opacity: 0.88;
+        transform: translateY(-1px);
+      }
+      &:disabled {
+        opacity: 0.42;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// ─── Spinner ──────────────────────────────────────────────────────────────────
+.spin {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+// ─── Keyframes ────────────────────────────────────────────────────────────────
+@keyframes bubblePop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes progressRun {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.38;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(36px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
