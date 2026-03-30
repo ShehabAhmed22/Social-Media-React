@@ -8,12 +8,11 @@ cat > README.md << 'EOF'
 
 A **full-featured social media platform** built with **Express.js + Prisma** (backend) and **React.js + Vite** (frontend) 🌐🚀  
 
-_Built with ❤️ by [Your Name]_
+_Built with ❤️ by [Shehab Elbana ]_
 
 ---
 
 ## 🔗 Demo
-[![Watch the Demo](https://img.shields.io/badge/Watch%20Demo-LinkedIn-blue?logo=linkedin)](#)
 
 ![Project Preview](https://user-images.githubusercontent.com/your-username/demo-preview.gif)  
 *Screenshot/GIF showing your app in action*
