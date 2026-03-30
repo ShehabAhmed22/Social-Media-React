@@ -3,7 +3,7 @@ cat > README.md << 'EOF'
 
 [![Backend](https://img.shields.io/badge/Backend-Node.js-green)](https://nodejs.org/)  
 [![Frontend](https://img.shields.io/badge/Frontend-React-blue)](https://reactjs.org/)  
-[![Database](https://img.shields.io/badge/Database-PostgreSQL-blueviolet)](https://www.postgresql.org/)  
+[![Database](https://img.shields.io/badge/Database-MySQL-blueviolet)](https://www.MySQl.org/)  
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 A **full-featured social media platform** built with **Express.js + Prisma** (backend) and **React.js + Vite** (frontend) 🌐🚀  
